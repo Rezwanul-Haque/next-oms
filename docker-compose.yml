@@ -1,0 +1,109 @@
+services:
+  consul:
+    image: consul:latest
+    container_name: consul_dev
+    restart: always
+    ports:
+      - "8500:8500"
+    networks:
+      - next-oms_networks
+
+  db:
+    container_name: next-oms_mysql
+    build:
+      context: .
+      dockerfile: Dockerfile.db
+    ports:
+      - "3309:3306"
+    volumes:
+      - next-oms_db:/var/lib/mysql:rw
+    environment:
+      - MYSQL_USER=next-oms_user
+      - MYSQL_PASSWORD=12345678
+      - MYSQL_DATABASE=next-oms_db
+      - MYSQL_ROOT_PASSWORD=12345678
+    tty: true
+    networks:
+      - next-oms_networks
+
+  redis:
+    image: 'bitnami/redis:6.0.9'
+    container_name: redis_dev
+    restart: always
+    ports:
+      - "6390:6379"
+    environment:
+      - DISABLE_COMMANDS=FLUSHDB,FLUSHALL,CONFIG
+      - REDIS_PASSWORD=password123
+    volumes:
+      - next-oms_cache:/bitnami/redis/data:rw
+    networks:
+      - next-oms_networks
+
+  next-oms:
+    container_name: next-oms
+    build:
+      context: .
+    ports:
+      - "8080:8080"
+    command: serve  # make `serve` into `seed` or `seed --truncate=true` if anyone want to run the seeder
+    volumes:
+      - ./:/project
+    environment:
+      - CONSUL_URL=consul_dev:8500
+      - CONSUL_PATH=next-oms
+    tty: true
+    depends_on:
+      - consul
+      - db
+      - redis
+    networks:
+      - next-oms_networks
+    deploy:
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+        window: 120s
+
+#  prometheus:
+#    image: prom/prometheus:latest
+#    container_name: next-oms_prom
+#    ports:
+#      - "9090:9090"
+#    volumes:
+#      - ./prometheus.yaml:/etc/prometheus/prometheus.yml
+#      - prometheus-data:/prometheus
+#    restart: unless-stopped
+#    command:
+#      - "--config.file=/etc/prometheus/prometheus.yml"
+#    depends_on:
+#      - next-oms
+#    networks:
+#      - next-oms_networks
+#
+#  grafana:
+#    image: grafana/grafana:latest
+#    container_name: next-oms_grafana
+#    ports:
+#      - "3000:3000"
+#    volumes:
+#      - grafana-data:/var/lib/grafana
+#    restart: unless-stopped
+#    networks:
+#      - next-oms_networks
+
+networks:
+  next-oms_networks:
+    name: next-oms_networks
+    driver: bridge
+
+volumes:
+  next-oms_db:
+    name: next-omsdb-data
+  next-oms_cache:
+    name: next-omscache-data
+  prometheus-data:
+    driver: local
+  grafana-data:
+    driver: local

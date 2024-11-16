@@ -1,0 +1,43 @@
+{
+  "app": {
+    "name": "next-oms",
+    "port": "8080",
+    "metricsPort": "9080",
+    "sort": "created_at desc",
+    "defaultPageSize" : 10,
+    "logLevel":   "Info"
+  },
+  "db": {
+    "mysql": {
+      "host": "nextOms_mysql",
+      "port": "3309",
+      "user": "root",
+      "pass": "12345678",
+      "schema": "nextOms_db",
+      "maxIdleConn": 1,
+      "maxOpenConn": 2,
+      "maxConnLifetime": 30,
+      "debug": true
+    }
+  },
+  "jwt": {
+    "accessTokenSecret": "accesstokensecret",
+    "refreshTokenSecret": "refreshtokensecret",
+    "accessTokenExpiry": 30,
+    "refreshTokenExpiry": 10080,
+    "contextKey": "user"
+  },
+  "cache": {
+    "redis": {
+      "host": "redis_dev",
+      "port": "6390",
+      "pass": "password123",
+      "db": 0,
+      "accessUuidPrefix": "access-uuid_",
+      "refreshUuidPrefix": "refresh-uuid_",
+      "userPrefix": "user_",
+      "tokenPrefix": "token_",
+      "ttl": 3600
+    }
+  }
+}
