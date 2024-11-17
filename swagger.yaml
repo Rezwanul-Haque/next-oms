@@ -33,8 +33,7 @@ paths:
           name: Body
           required: true
           schema:
-            type: object
-            example: {}
+            $ref: '#/definitions/DeliveryOrder'
       responses:
         "201":
           description: Order created successfully.
@@ -212,6 +211,93 @@ definitions:
         type: string
       user_name:
         type: string
+  DeliveryOrder:
+    type: object
+    properties:
+      store_id:
+        type: integer
+        format: int64
+        description: The ID of the store placing the order.
+      merchant_order_id:
+        type: string
+        description: The unique order ID assigned by the merchant.
+      recipient_name:
+        type: string
+        description: The name of the recipient.
+      recipient_phone:
+        type: string
+        description: The phone number of the recipient.
+      recipient_address:
+        type: string
+        description: The address of the recipient.
+      recipient_city:
+        type: integer
+        format: int32
+        description: The ID representing the recipient's city.
+      recipient_zone:
+        type: integer
+        format: int32
+        description: The ID representing the recipient's zone.
+      recipient_area:
+        type: integer
+        format: int32
+        description: The ID representing the recipient's area.
+      delivery_type:
+        type: integer
+        format: int32
+        description: The type of delivery service (e.g., standard, express).
+      item_type:
+        type: integer
+        format: int32
+        description: The type of item being delivered.
+      special_instruction:
+        type: string
+        description: Any special instructions for the delivery.
+      item_quantity:
+        type: integer
+        format: int32
+        description: The quantity of items in the order.
+      item_weight:
+        type: number
+        format: float
+        description: The weight of the item in kilograms.
+      amount_to_collect:
+        type: number
+        format: float
+        description: The amount to be collected upon delivery.
+      item_description:
+        type: string
+        description: A description of the item being delivered.
+    required:
+      - store_id
+      - merchant_order_id
+      - recipient_name
+      - recipient_phone
+      - recipient_address
+      - recipient_city
+      - recipient_zone
+      - recipient_area
+      - delivery_type
+      - item_type
+      - item_quantity
+      - item_weight
+      - amount_to_collect
+    example:
+      store_id: 131172
+      merchant_order_id: "1"
+      recipient_name: "Jhon Doe Jr."
+      recipient_phone: "01901901901"
+      recipient_address: "banani, gulshan 2, dhaka, bangladesh"
+      recipient_city: 1
+      recipient_zone: 1
+      recipient_area: 1
+      delivery_type: 48
+      item_type: 2
+      special_instruction: "N/A"
+      item_quantity: 1
+      item_weight: 0.5
+      amount_to_collect: 20.0
+      item_description: "Dummy Item"
 responses:
   UserCreatedResponse:
     description: Response after a user is created

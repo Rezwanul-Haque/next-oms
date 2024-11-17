@@ -14,13 +14,13 @@ services:
       context: .
       dockerfile: Dockerfile.db
     ports:
-      - "3309:3306"
+      - "33366:3306"
     volumes:
       - next-oms_db:/var/lib/mysql:rw
     environment:
       - MYSQL_USER=next-oms_user
       - MYSQL_PASSWORD=12345678
-      - MYSQL_DATABASE=next-oms_db
+      - MYSQL_DATABASE=nextOms_db
       - MYSQL_ROOT_PASSWORD=12345678
     tty: true
     networks:

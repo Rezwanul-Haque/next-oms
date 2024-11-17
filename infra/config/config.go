@@ -137,10 +137,10 @@ func setDefaultConfig() {
 
 	config.Db.MySQL = &DbConfig{
 		Host:            "127.0.0.1",
-		Port:            "3309",
+		Port:            "33366",
 		User:            "root",
 		Pass:            "12345678",
-		Schema:          "next-oms_db",
+		Schema:          "nextOms_db",
 		MaxIdleConn:     1,
 		MaxOpenConn:     2,
 		MaxConnLifetime: 30,

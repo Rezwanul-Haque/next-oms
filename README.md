@@ -10,6 +10,10 @@ Explore the API interactively using one of the following tools:
 - Rapidoc: http://localhost:8080/docs/rapidoc
 ## How to Run the Service
 ### Local Development
+0. Mysql and Redis need to be installed
+```bash
+docker-compose up -d db redis
+```
 1. Install dependencies:
 ```bash
 go mod vendor

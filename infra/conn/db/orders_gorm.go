@@ -48,9 +48,6 @@ func (dc DatabaseClient) GetOrders(filters *serializers.ListFilters) (domain.Ord
 	countStmt := applyFilters(dc.DB, tableName, filters, true)
 
 	res := stmt.Find(&resp)
-	if res.RowsAffected == 0 {
-		return nil, errors.NewNotFoundError("no orders found")
-	}
 
 	if res.Error != nil {
 		dc.lc.Error("error occurred when getting orders", res.Error)
