@@ -46,7 +46,7 @@ func Attach(e *echo.Echo, lc logger.LogClient) error {
 				"/api/v1/password/forgot",
 				"/api/v1/password/verifyreset",
 				"/api/v1/password/reset",
-				"/api/v1/user/signup":
+				"/api/v1/users/signup":
 				return true
 			default:
 				return false

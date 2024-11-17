@@ -28,7 +28,7 @@ func NewUsersController(grp interface{}, lc logger.LogClient, uSvc svc.IUsers) {
 
 	g := grp.(*echo.Group)
 
-	g.POST("/v1/user/signup", uc.Create)
+	g.POST("/v1/users/signup", uc.Create)
 	g.PATCH("/v1/user", uc.Update)
 	g.POST("/v1/password/change", uc.ChangePassword)
 	g.POST("/v1/password/forgot", uc.ForgotPassword)
@@ -36,7 +36,7 @@ func NewUsersController(grp interface{}, lc logger.LogClient, uSvc svc.IUsers) {
 	g.POST("/v1/password/reset", uc.ResetPassword)
 }
 
-// swagger:route POST /v1/user/signup User CreateUser
+// swagger:route POST /v1/users/signup User CreateUser
 // Create a new user
 // responses:
 //	201: UserCreatedResponse

@@ -13,7 +13,7 @@
       "port": "3306",
       "user": "root",
       "pass": "12345678",
-      "schema": "next-oms_db",
+      "schema": "nextOms_db",
       "maxIdleConn": 1,
       "maxOpenConn": 2,
       "maxConnLifetime": 30,

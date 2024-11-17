@@ -29,7 +29,7 @@ dev:
 	# setting KV, dependency of app
 	@curl --request PUT --data-binary @config.local.json http://localhost:8500/v1/kv/${PROJECT_NAME}
 
-	# building ar5go
+	# building next oms
 	@docker-compose up --build ${PROJECT_NAME}
 
 test: ## Run unittests
