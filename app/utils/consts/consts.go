@@ -7,7 +7,7 @@ const (
 	RefreshTokenType = "refresh"
 )
 
-const OrderPending = "pending"
+const OrderPending = "Pending"
 
 var ItemTypeMap = map[int]string{
 	1: "Electronics",
@@ -51,7 +51,7 @@ var OrderTypeDeliveryMap = map[int]float64{
 func CalculateDeliveryFee(orderTypeID int, baseFee float64) float64 {
 	delivery, exists := OrderTypeDeliveryMap[orderTypeID]
 	if !exists {
-		delivery = 0.0 // No delivery for unknown order types
+		delivery = 0.0
 	}
 	return baseFee - (baseFee * delivery / 100)
 }

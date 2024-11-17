@@ -1,1010 +1,583 @@
 {
 	"info": {
-		"_postman_id": "f14852f7-b39b-41d4-96bd-2d11196154de",
-		"name": "Clean",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+		"_postman_id": "55be62ff-4fd9-4163-9462-811742e32023",
+		"name": "Next-OMS",
+		"description": "HAR To Postman Generated Collection",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "4243508"
 	},
 	"item": [
 		{
-			"name": "auth",
-			"item": [
-				{
-					"name": "token",
-					"item": [
-						{
-							"name": "refresh token",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"exec": [
-											"if (responseCode.code === 200) {",
-											"    var jsonData = JSON.parse(responseBody);",
-											"postman.setEnvironmentVariable(\"access_token\", jsonData.access_token);",
-											"postman.setEnvironmentVariable(\"refresh_token\", jsonData.refresh_token);",
-											"}"
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"auth": {
-									"type": "noauth"
-								},
-								"method": "POST",
-								"header": [
-									{
-										"key": "Content-Type",
-										"value": "application/json"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n\t\"refresh_token\": \"{{refresh_token}}\"\n}"
-								},
-								"url": {
-									"raw": "{{schema}}://{{url}}/v1/token/refresh",
-									"protocol": "{{schema}}",
-									"host": [
-										"{{url}}"
-									],
-									"path": [
-										"v1",
-										"token",
-										"refresh"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "verify token",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"exec": [
-											""
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"protocolProfileBehavior": {
-								"disableBodyPruning": true
-							},
-							"request": {
-								"auth": {
-									"type": "bearer",
-									"bearer": [
-										{
-											"key": "token",
-											"value": "{{access_token}}",
-											"type": "string"
-										}
-									]
-								},
-								"method": "GET",
-								"header": [
-									{
-										"key": "Content-Type",
-										"value": "application/json"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": ""
-								},
-								"url": {
-									"raw": "{{schema}}://{{url}}/v1/token/verify",
-									"protocol": "{{schema}}",
-									"host": [
-										"{{url}}"
-									],
-									"path": [
-										"v1",
-										"token",
-										"verify"
-									]
-								}
-							},
-							"response": []
-						}
-					]
-				},
-				{
-					"name": "login/logout",
-					"item": [
-						{
-							"name": "login admin",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"exec": [
-											"if (responseCode.code === 200) {",
-											"    var jsonData = JSON.parse(responseBody);",
-											"    postman.setEnvironmentVariable(\"access_token\", jsonData.access_token);",
-											"    postman.setEnvironmentVariable(\"refresh_token\", jsonData.refresh_token);",
-											"}"
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "Content-Type",
-										"value": "application/json"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n\t\"email\": \"admin@vivasoftltd.com\",\n\t\"password\": \"12345678\",\n    \"admin\": true\n}"
-								},
-								"url": {
-									"raw": "{{schema}}://{{url}}/login",
-									"protocol": "{{schema}}",
-									"host": [
-										"{{url}}"
-									],
-									"path": [
-										"login"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "login sales",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"exec": [
-											"if (responseCode.code === 200) {",
-											"    var jsonData = JSON.parse(responseBody);",
-											"postman.setEnvironmentVariable(\"access_token\", jsonData.access_token);",
-											"postman.setEnvironmentVariable(\"refresh_token\", jsonData.refresh_token);",
-											"}"
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "Content-Type",
-										"value": "application/json"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n\t\"email\": \"shahanbhai@vivasoftltd.com\",\n\t\"password\": \"sha!han\",\n    \"admin\": false\n}"
-								},
-								"url": {
-									"raw": "{{schema}}://{{url}}/login",
-									"protocol": "{{schema}}",
-									"host": [
-										"{{url}}"
-									],
-									"path": [
-										"login"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "logout",
-							"request": {
-								"auth": {
-									"type": "bearer",
-									"bearer": [
-										{
-											"key": "token",
-											"value": "{{access_token}}",
-											"type": "string"
-										}
-									]
-								},
-								"method": "POST",
-								"header": [],
-								"body": {
-									"mode": "formdata",
-									"formdata": []
-								},
-								"url": {
-									"raw": "{{schema}}://{{url}}/logout",
-									"protocol": "{{schema}}",
-									"host": [
-										"{{url}}"
-									],
-									"path": [
-										"logout"
-									]
-								}
-							},
-							"response": []
-						}
+			"name": "Create Order",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhaWQiOiJhOTUyMzEyMC1iODBmLTRjZGYtYjY1OS1iMGFmODRiZTVmZTMiLCJleHAiOjE3MzE4MzE5NTEsInJpZCI6Ijk2NjRhODQzLWY5OWItNDRmNy1hNWEyLTRiMjgwNjc0ZGNmZCIsInVpZCI6MX0.lRWm8iw_e3urmcNauqbwitQ18ut2kz-WCLV9JCcH97k"
+					}
+				],
+				"url": {
+					"raw": "{{host}}/api/v1/orders",
+					"host": [
+						"{{host}}"
 					],
-					"event": [
-						{
-							"listen": "prerequest",
-							"script": {
-								"type": "text/javascript",
-								"exec": [
-									""
-								]
-							}
-						},
-						{
-							"listen": "test",
-							"script": {
-								"type": "text/javascript",
-								"exec": [
-									""
-								]
-							}
-						}
-					]
-				},
-				{
-					"name": "permission",
-					"item": [
-						{
-							"name": "create",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"exec": [
-											""
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"auth": {
-									"type": "bearer",
-									"bearer": [
-										{
-											"key": "token",
-											"value": "{{access_token}}",
-											"type": "string"
-										}
-									]
-								},
-								"method": "POST",
-								"header": [
-									{
-										"key": "Content-Type",
-										"value": "application/json"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n\t\"permission\": \"create.user\",\n\t\"description\": \"Permission to create User\"\n}"
-								},
-								"url": {
-									"raw": "{{schema}}://{{url}}/v1/permission",
-									"protocol": "{{schema}}",
-									"host": [
-										"{{url}}"
-									],
-									"path": [
-										"v1",
-										"permission"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "update",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"exec": [
-											""
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"auth": {
-									"type": "bearer",
-									"bearer": [
-										{
-											"key": "token",
-											"value": "{{access_token}}",
-											"type": "string"
-										}
-									]
-								},
-								"method": "POST",
-								"header": [
-									{
-										"key": "Content-Type",
-										"value": "application/json"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n\t\"permission\": \"fetch.branch.test\"\n}"
-								},
-								"url": {
-									"raw": "{{schema}}://{{url}}/v1/permission",
-									"protocol": "{{schema}}",
-									"host": [
-										"{{url}}"
-									],
-									"path": [
-										"v1",
-										"permission"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "get all",
-							"request": {
-								"auth": {
-									"type": "bearer",
-									"bearer": [
-										{
-											"key": "token",
-											"value": "{{access_token}}",
-											"type": "string"
-										}
-									]
-								},
-								"method": "GET",
-								"header": [
-									{
-										"key": "Content-Type",
-										"type": "text",
-										"value": "application/json"
-									}
-								],
-								"url": {
-									"raw": "{{schema}}://{{url}}/v1/permission",
-									"protocol": "{{schema}}",
-									"host": [
-										"{{url}}"
-									],
-									"path": [
-										"v1",
-										"permission"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "delete",
-							"request": {
-								"auth": {
-									"type": "bearer",
-									"bearer": [
-										{
-											"key": "token",
-											"value": "{{access_token}}",
-											"type": "string"
-										}
-									]
-								},
-								"method": "DELETE",
-								"header": [
-									{
-										"key": "Content-Type",
-										"type": "text",
-										"value": "application/json"
-									}
-								],
-								"url": {
-									"raw": "{{schema}}://{{url}}/v1/permission/25",
-									"protocol": "{{schema}}",
-									"host": [
-										"{{url}}"
-									],
-									"path": [
-										"v1",
-										"permission",
-										"25"
-									]
-								}
-							},
-							"response": []
-						}
-					]
-				},
-				{
-					"name": "role",
-					"item": [
-						{
-							"name": "create",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"exec": [
-											""
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"auth": {
-									"type": "bearer",
-									"bearer": [
-										{
-											"key": "token",
-											"value": "{{access_token}}",
-											"type": "string"
-										}
-									]
-								},
-								"method": "POST",
-								"header": [
-									{
-										"key": "Content-Type",
-										"value": "application/json"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n\t\"role\": \"testrole\",\n\t\"display_role\": \"testrole\"\n}"
-								},
-								"url": {
-									"raw": "{{schema}}://{{url}}/v1/role",
-									"protocol": "{{schema}}",
-									"host": [
-										"{{url}}"
-									],
-									"path": [
-										"v1",
-										"role"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "update",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"exec": [
-											""
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"auth": {
-									"type": "bearer",
-									"bearer": [
-										{
-											"key": "token",
-											"value": "{{access_token}}",
-											"type": "string"
-										}
-									]
-								},
-								"method": "PATCH",
-								"header": [
-									{
-										"key": "Content-Type",
-										"value": "application/json"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n\t\"role\": \"admin\",\n\t\"display_role\": \"Admin\"\n}"
-								},
-								"url": {
-									"raw": "{{schema}}://{{url}}/v1/role/1",
-									"protocol": "{{schema}}",
-									"host": [
-										"{{url}}"
-									],
-									"path": [
-										"v1",
-										"role",
-										"1"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "set permissions",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"exec": [
-											""
-										],
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"auth": {
-									"type": "bearer",
-									"bearer": [
-										{
-											"key": "token",
-											"value": "{{access_token}}",
-											"type": "string"
-										}
-									]
-								},
-								"method": "POST",
-								"header": [
-									{
-										"key": "Content-Type",
-										"value": "application/json"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n\t\"permissions\": [13, 14]\n}"
-								},
-								"url": {
-									"raw": "{{schema}}://{{url}}/v1/role/1/permissions",
-									"protocol": "{{schema}}",
-									"host": [
-										"{{url}}"
-									],
-									"path": [
-										"v1",
-										"role",
-										"1",
-										"permissions"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "get permissions",
-							"request": {
-								"auth": {
-									"type": "bearer",
-									"bearer": [
-										{
-											"key": "token",
-											"value": "{{access_token}}",
-											"type": "string"
-										}
-									]
-								},
-								"method": "GET",
-								"header": [
-									{
-										"key": "Content-Type",
-										"value": "application/json",
-										"type": "text"
-									}
-								],
-								"url": {
-									"raw": "{{schema}}://{{url}}/v1/role/1/permissions",
-									"protocol": "{{schema}}",
-									"host": [
-										"{{url}}"
-									],
-									"path": [
-										"v1",
-										"role",
-										"1",
-										"permissions"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "get all",
-							"request": {
-								"auth": {
-									"type": "bearer",
-									"bearer": [
-										{
-											"key": "token",
-											"value": "{{access_token}}",
-											"type": "string"
-										}
-									]
-								},
-								"method": "GET",
-								"header": [
-									{
-										"key": "Content-Type",
-										"type": "text",
-										"value": "application/json"
-									}
-								],
-								"url": {
-									"raw": "{{schema}}://{{url}}/v1/role",
-									"protocol": "{{schema}}",
-									"host": [
-										"{{url}}"
-									],
-									"path": [
-										"v1",
-										"role"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "delete",
-							"request": {
-								"auth": {
-									"type": "bearer",
-									"bearer": [
-										{
-											"key": "token",
-											"value": "{{access_token}}",
-											"type": "string"
-										}
-									]
-								},
-								"method": "DELETE",
-								"header": [
-									{
-										"key": "Content-Type",
-										"type": "text",
-										"value": "application/json"
-									}
-								],
-								"url": {
-									"raw": "{{schema}}://{{url}}/v1/role/6",
-									"protocol": "{{schema}}",
-									"host": [
-										"{{url}}"
-									],
-									"path": [
-										"v1",
-										"role",
-										"6"
-									]
-								}
-							},
-							"response": []
-						}
-					]
-				},
-				{
-					"name": "password",
-					"item": [
-						{
-							"name": "change",
-							"request": {
-								"auth": {
-									"type": "bearer",
-									"bearer": [
-										{
-											"key": "token",
-											"value": "{{access_token}}",
-											"type": "string"
-										}
-									]
-								},
-								"method": "POST",
-								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n\t\"old_password\": \"shadowchef\",\n\t\"new_password\": \"shadowchef\"\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "{{schema}}://{{url}}/v1/password/change",
-									"protocol": "{{schema}}",
-									"host": [
-										"{{url}}"
-									],
-									"path": [
-										"v1",
-										"password",
-										"change"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "forgot",
-							"request": {
-								"auth": {
-									"type": "noauth"
-								},
-								"method": "POST",
-								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n\t\"email\": \"admin@shadowchef.co\"\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "{{schema}}://{{url}}/v1/password/forgot",
-									"protocol": "{{schema}}",
-									"host": [
-										"{{url}}"
-									],
-									"path": [
-										"v1",
-										"password",
-										"forgot"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "verify reset",
-							"request": {
-								"auth": {
-									"type": "noauth"
-								},
-								"method": "POST",
-								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n\t\"id\": 16,\n\t\"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFiZHVsLm11a2l0QHZpdmFjb21zb2x1dGlvbnMuY29tIn0.cLZIBTSiqq_H8TCbKchovheDosh9SZdx3jUI766oTaA\"\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "{{schema}}://{{url}}/v1/password/verifyreset",
-									"protocol": "{{schema}}",
-									"host": [
-										"{{url}}"
-									],
-									"path": [
-										"v1",
-										"password",
-										"verifyreset"
-									],
-									"query": [
-										{
-											"key": "id",
-											"value": "16",
-											"disabled": true
-										},
-										{
-											"key": "token",
-											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFiZHVsLm11a2l0QHZpdmFjb21zb2x1dGlvbnMuY29tIn0.cLZIBTSiqq_H8TCbKchovheDosh9SZdx3jUI766oTaA",
-											"disabled": true
-										}
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "reset",
-							"request": {
-								"auth": {
-									"type": "noauth"
-								},
-								"method": "POST",
-								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n\t\"id\": 17,\n\t\"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFiZHVsLm11a2l0QHZpdmFjb21zb2x1dGlvbnMuY29tIn0.idG-uCSj3aFsF-lnvXVegWC7uT_S8ngTdDxvQUtax_A\",\n\t\"password\": \"mukit027\"\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "{{schema}}://{{url}}/v1/password/reset",
-									"protocol": "{{schema}}",
-									"host": [
-										"{{url}}"
-									],
-									"path": [
-										"v1",
-										"password",
-										"reset"
-									],
-									"query": [
-										{
-											"key": "id",
-											"value": "16",
-											"disabled": true
-										},
-										{
-											"key": "token",
-											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFiZHVsLm11a2l0QHZpdmFjb21zb2x1dGlvbnMuY29tIn0.cLZIBTSiqq_H8TCbKchovheDosh9SZdx3jUI766oTaA",
-											"disabled": true
-										}
-									]
-								}
-							},
-							"response": []
-						}
+					"path": [
+						"api",
+						"v1",
+						"orders"
 					]
 				}
-			]
-		},
-		{
-			"name": "Company",
-			"item": [
+			},
+			"response": [
 				{
-					"name": "Comany signup",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"if (responseCode.code === 200) {",
-									"    var jsonData = JSON.parse(responseBody);",
-									"    postman.setEnvironmentVariable(\"app_key\", jsonData.app_key);",
-									"}"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
+					"name": " / 400",
+					"originalRequest": {
 						"method": "POST",
-						"header": [
-							{
-								"key": "SecretKey",
-								"value": "dHepoR82!e#",
-								"type": "text",
-								"disabled": true
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"name\": \"Vivasoft\",\n    \"logo\": \"vivasoftltd.png\",\n    \"address\": \"dohs,mirpur\",\n    \"password\": \"12345678\",\n    \"business_id\": 1,\n    \"num_of_employee\": 50,\n    \"email\": \"admin@vivasoftltd.com\",\n    \"sns_link\": \"www.vivasoftltd.com\",\n    \"phone\": \"123123123\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{schema}}://{{url}}/company/signup",
-							"protocol": "{{schema}}",
-							"host": [
-								"{{url}}"
-							],
-							"path": [
-								"company",
-								"signup"
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "User",
-			"item": [
-				{
-					"name": "User signup",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{access_token}}",
-									"type": "string"
-								}
-							]
-						},
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json",
-								"type": "text"
-							},
-							{
-								"key": "AppKey",
-								"value": "65672ef5-b6f3-4c2a-8f86-7cb85734a4a0",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n\t\"first_name\": \"shahan\",\n    \"last_name\": \"khan\",\n    \"email\": \"shahanbhai@vivasoftltd.com\",\n    \"password\": \"sha!han\",\n    \"phone\": \"1234453\"\n}"
-						},
-						"url": {
-							"raw": "{{schema}}://{{url}}/user/signup",
-							"protocol": "{{schema}}",
-							"host": [
-								"{{url}}"
-							],
-							"path": [
-								"user",
-								"signup"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Resolve User by API Key",
-					"request": {
-						"method": "GET",
 						"header": [
 							{
 								"key": "Content-Type",
 								"value": "application/json"
 							},
 							{
-								"key": "AppKey",
-								"value": "075ea9e05865e64c9f1f06422b8cb379"
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhaWQiOiJhOTUyMzEyMC1iODBmLTRjZGYtYjY1OS1iMGFmODRiZTVmZTMiLCJleHAiOjE3MzE4MzE5NTEsInJpZCI6Ijk2NjRhODQzLWY5OWItNDRmNy1hNWEyLTRiMjgwNjc0ZGNmZCIsInVpZCI6MX0.lRWm8iw_e3urmcNauqbwitQ18ut2kz-WCLV9JCcH97k"
 							}
 						],
 						"url": {
-							"raw": "{{schema}}://{{url}}/user/resolve",
-							"protocol": "{{schema}}",
+							"raw": "{{baseURL1}}/api/v1/orders",
 							"host": [
-								"{{url}}"
+								"{{baseURL1}}"
 							],
 							"path": [
-								"user",
-								"resolve"
+								"api",
+								"v1",
+								"orders"
 							]
 						}
 					},
-					"response": []
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "text",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=UTF-8"
+						},
+						{
+							"key": "Vary",
+							"value": "Origin"
+						},
+						{
+							"key": "Vary",
+							"value": "Accept-Encoding"
+						},
+						{
+							"key": "X-Content-Type-Options",
+							"value": "nosniff"
+						},
+						{
+							"key": "X-Frame-Options",
+							"value": "SAMEORIGIN"
+						},
+						{
+							"key": "X-Xss-Protection",
+							"value": "1; mode=block"
+						},
+						{
+							"key": "Date",
+							"value": "Sun, 17 Nov 2024 03:46:12 GMT"
+						},
+						{
+							"key": "Content-Length",
+							"value": "95"
+						}
+					],
+					"cookie": [],
+					"body": "application/json; charset=UTF-8 content type is not supported in the response body"
 				}
 			]
 		},
 		{
-			"name": "Health Check",
+			"name": "Cancel Order",
 			"request": {
-				"method": "GET",
-				"header": [],
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhaWQiOiJhOTUyMzEyMC1iODBmLTRjZGYtYjY1OS1iMGFmODRiZTVmZTMiLCJleHAiOjE3MzE4MzE5NTEsInJpZCI6Ijk2NjRhODQzLWY5OWItNDRmNy1hNWEyLTRiMjgwNjc0ZGNmZCIsInVpZCI6MX0.lRWm8iw_e3urmcNauqbwitQ18ut2kz-WCLV9JCcH97k"
+					}
+				],
 				"url": {
-					"raw": "{{schema}}://{{url}}/ping",
-					"protocol": "{{schema}}",
+					"raw": "{{host}}/api/v1/orders/CONS-131172-Jhon%20Doe%20Jr.-7516511118492491787/cancel",
 					"host": [
-						"{{url}}"
+						"{{host}}"
 					],
 					"path": [
-						"ping"
+						"api",
+						"v1",
+						"orders",
+						"CONS-131172-Jhon%20Doe%20Jr.-7516511118492491787",
+						"cancel"
 					]
 				}
 			},
-			"response": []
+			"response": [
+				{
+					"name": "successfully / 200",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhaWQiOiJhOTUyMzEyMC1iODBmLTRjZGYtYjY1OS1iMGFmODRiZTVmZTMiLCJleHAiOjE3MzE4MzE5NTEsInJpZCI6Ijk2NjRhODQzLWY5OWItNDRmNy1hNWEyLTRiMjgwNjc0ZGNmZCIsInVpZCI6MX0.lRWm8iw_e3urmcNauqbwitQ18ut2kz-WCLV9JCcH97k"
+							}
+						],
+						"url": {
+							"raw": "{{baseURL1}}/api/v1/orders/CONS-131172-Jhon%20Doe%20Jr.-7516511118492491787/cancel",
+							"host": [
+								"{{baseURL1}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"orders",
+								"CONS-131172-Jhon%20Doe%20Jr.-7516511118492491787",
+								"cancel"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "text",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=UTF-8"
+						},
+						{
+							"key": "Vary",
+							"value": "Origin"
+						},
+						{
+							"key": "Vary",
+							"value": "Accept-Encoding"
+						},
+						{
+							"key": "X-Content-Type-Options",
+							"value": "nosniff"
+						},
+						{
+							"key": "X-Frame-Options",
+							"value": "SAMEORIGIN"
+						},
+						{
+							"key": "X-Xss-Protection",
+							"value": "1; mode=block"
+						},
+						{
+							"key": "Date",
+							"value": "Sun, 17 Nov 2024 04:05:39 GMT"
+						},
+						{
+							"key": "Content-Length",
+							"value": "71"
+						}
+					],
+					"cookie": [],
+					"body": "application/json; charset=UTF-8 content type is not supported in the response body"
+				}
+			]
+		},
+		{
+			"name": "Get Orders",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhaWQiOiI4OTcwMWU4YS00ZDk2LTQ4MjAtODZmNy1jYmVjMTFjOTkyZDAiLCJleHAiOjE3MzE4MjgyMDQsInJpZCI6ImFhNmIyYzRjLTJmMTItNDVkNS1iNmQ2LWI1OTQ1YzQ2NGM0NiIsInVpZCI6MX0.K-h-hi1TfHNGUpC0zqGZwB8O4VtWnF8RyKw6SZ3233E"
+					}
+				],
+				"url": {
+					"raw": "{{host}}/api/v1/orders/all",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"orders",
+						"all"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "successfully / 200",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhaWQiOiI4OTcwMWU4YS00ZDk2LTQ4MjAtODZmNy1jYmVjMTFjOTkyZDAiLCJleHAiOjE3MzE4MjgyMDQsInJpZCI6ImFhNmIyYzRjLTJmMTItNDVkNS1iNmQ2LWI1OTQ1YzQ2NGM0NiIsInVpZCI6MX0.K-h-hi1TfHNGUpC0zqGZwB8O4VtWnF8RyKw6SZ3233E"
+							}
+						],
+						"url": {
+							"raw": "{{baseURL1}}/api/v1/orders/all",
+							"host": [
+								"{{baseURL1}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"orders",
+								"all"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "text",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=UTF-8"
+						},
+						{
+							"key": "Vary",
+							"value": "Origin"
+						},
+						{
+							"key": "Vary",
+							"value": "Accept-Encoding"
+						},
+						{
+							"key": "X-Content-Type-Options",
+							"value": "nosniff"
+						},
+						{
+							"key": "X-Frame-Options",
+							"value": "SAMEORIGIN"
+						},
+						{
+							"key": "X-Xss-Protection",
+							"value": "1; mode=block"
+						},
+						{
+							"key": "Date",
+							"value": "Sun, 17 Nov 2024 03:30:20 GMT"
+						},
+						{
+							"key": "Content-Length",
+							"value": "862"
+						}
+					],
+					"cookie": [],
+					"body": "application/json; charset=UTF-8 content type is not supported in the response body"
+				}
+			]
+		},
+		{
+			"name": "Login",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "User-Agent",
+						"value": "insomnia/10.1.1"
+					}
+				],
+				"url": {
+					"raw": "{{host}}/api/v1/login",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"login"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "successfully / 200",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "User-Agent",
+								"value": "insomnia/10.1.1"
+							}
+						],
+						"url": {
+							"raw": "{{baseURL1}}/api/v1/login",
+							"host": [
+								"{{baseURL1}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"login"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "text",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=UTF-8"
+						},
+						{
+							"key": "Vary",
+							"value": "Origin"
+						},
+						{
+							"key": "Vary",
+							"value": "Accept-Encoding"
+						},
+						{
+							"key": "X-Content-Type-Options",
+							"value": "nosniff"
+						},
+						{
+							"key": "X-Frame-Options",
+							"value": "SAMEORIGIN"
+						},
+						{
+							"key": "X-Xss-Protection",
+							"value": "1; mode=block"
+						},
+						{
+							"key": "Date",
+							"value": "Sun, 17 Nov 2024 03:25:51 GMT"
+						},
+						{
+							"key": "Content-Length",
+							"value": "793"
+						}
+					],
+					"cookie": [],
+					"body": "application/json; charset=UTF-8 content type is not supported in the response body"
+				}
+			]
+		},
+		{
+			"name": "User Signup",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "User-Agent",
+						"value": "insomnia/10.1.1"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"email\": \"01901901901@mailinator.com\",\r\n  \"first_name\": \"Hello\",\r\n  \"last_name\": \"World\",\r\n  \"password\": \"321dsa\",\r\n  \"phone\": \"424242424\",\r\n  \"profile_pic\": \"https://google.com\",\r\n  \"user_name\": \"HelloWorld\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/api/v1/users/signup",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"users",
+						"signup"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "no response code found",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "User-Agent",
+								"value": "insomnia/10.1.1"
+							}
+						],
+						"url": {
+							"raw": "{{baseURL1}}/api/v1/login",
+							"host": [
+								"{{baseURL1}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"login"
+							]
+						}
+					},
+					"_postman_previewlanguage": "Text",
+					"header": [],
+					"cookie": [],
+					"body": ""
+				}
+			]
+		},
+		{
+			"name": "Logout",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "User-Agent",
+						"value": "insomnia/10.1.1"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhaWQiOiJhYzEwNjE3MC1lYTliLTQ2Y2UtYjY5YS0wYjFkNDkyMWIwZDAiLCJleHAiOjE3MzE3NzIxNjEsInJpZCI6IjQzM2UxNTg1LTMzODEtNDExMS05YTM5LTNmMjM1MDRlZjk5OSIsInVpZCI6MX0.nmJq1YupHVVXJ7ZSMsNNFC4KPANMTXQ6CYCdio7u3Aw"
+					}
+				],
+				"url": {
+					"raw": "{{host}}/api/v1/logout",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"logout"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": " / 401",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "User-Agent",
+								"value": "insomnia/10.1.1"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhaWQiOiJhYzEwNjE3MC1lYTliLTQ2Y2UtYjY5YS0wYjFkNDkyMWIwZDAiLCJleHAiOjE3MzE3NzIxNjEsInJpZCI6IjQzM2UxNTg1LTMzODEtNDExMS05YTM5LTNmMjM1MDRlZjk5OSIsInVpZCI6MX0.nmJq1YupHVVXJ7ZSMsNNFC4KPANMTXQ6CYCdio7u3Aw"
+							}
+						],
+						"url": {
+							"raw": "{{baseURL1}}/api/v1/logout",
+							"host": [
+								"{{baseURL1}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"logout"
+							]
+						}
+					},
+					"status": "Unauthorized",
+					"code": 401,
+					"_postman_previewlanguage": "text",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=UTF-8"
+						},
+						{
+							"key": "Vary",
+							"value": "Origin"
+						},
+						{
+							"key": "Vary",
+							"value": "Accept-Encoding"
+						},
+						{
+							"key": "X-Content-Type-Options",
+							"value": "nosniff"
+						},
+						{
+							"key": "X-Frame-Options",
+							"value": "SAMEORIGIN"
+						},
+						{
+							"key": "X-Xss-Protection",
+							"value": "1; mode=block"
+						},
+						{
+							"key": "Date",
+							"value": "Sat, 16 Nov 2024 13:47:21 GMT"
+						},
+						{
+							"key": "Content-Length",
+							"value": "46"
+						}
+					],
+					"cookie": [],
+					"body": "application/json; charset=UTF-8 content type is not supported in the response body"
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "host",
+			"value": "http://localhost:8080",
+			"type": "any"
 		}
 	]
 }

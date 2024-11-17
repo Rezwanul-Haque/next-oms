@@ -8,6 +8,7 @@ import (
 type IOrders interface {
 	SaveOrder(order *Order) (*Order, *errors.RestErr)
 	GetOrders(filters *serializers.ListFilters) (Orders, *errors.RestErr)
+	CancelOrder(conID string) *errors.RestErr
 }
 
 type Order struct {

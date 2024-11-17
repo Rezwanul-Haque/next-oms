@@ -3,6 +3,7 @@ package db
 import (
 	"next-oms/app/domain"
 	"next-oms/app/serializers"
+	"next-oms/app/utils/msgutil"
 	"next-oms/infra/conn/db/models"
 	"next-oms/infra/errors"
 )
@@ -70,4 +71,22 @@ func (dc DatabaseClient) GetOrders(filters *serializers.ListFilters) (domain.Ord
 	filters.GeneratePagesPath()
 
 	return resp, nil
+}
+
+func (dc DatabaseClient) CancelOrder(conID string) *errors.RestErr {
+	res := dc.DB.Model(&models.Order{}).
+		Where("consignment_id = ?", conID).
+		Update("status", "Cancelled")
+
+	if res.Error != nil {
+		dc.lc.Error(msgutil.EntityGenericFailedMsg("cancel order"), res.Error)
+		return errors.NewInternalServerError(errors.ErrSomethingWentWrong)
+	}
+
+	if res.RowsAffected == 0 {
+		dc.lc.Warn(msgutil.EntityNotFoundMsg(conID))
+		return errors.NewNotFoundError("order not found")
+	}
+
+	return nil
 }

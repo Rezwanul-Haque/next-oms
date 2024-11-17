@@ -77,3 +77,7 @@ func (o *orders) GetOrders(filters *serializers.ListFilters) (*serializers.ListF
 	filters.Results = orders
 	return filters, nil
 }
+
+func (o *orders) CancelOrder(conID string) *errors.RestErr {
+	return o.orepo.CancelOrder(conID)
+}

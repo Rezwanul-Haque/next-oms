@@ -32,3 +32,7 @@ func (r *orders) SaveOrder(user *domain.Order) (*domain.Order, *errors.RestErr) 
 func (r *orders) GetOrders(filters *serializers.ListFilters) (domain.Orders, *errors.RestErr) {
 	return r.DB.GetOrders(filters)
 }
+
+func (r *orders) CancelOrder(conID string) *errors.RestErr {
+	return r.DB.CancelOrder(conID)
+}

@@ -25,6 +25,7 @@ func NewOrdersController(grp interface{}, lc logger.LogClient, oSvc svc.IOrders)
 
 	g.POST("/v1/orders", oc.Create)
 	g.GET("/v1/orders/all", oc.GetOrders)
+	g.PUT("/v1/orders/:con_id/cancel", oc.CancelOrder)
 }
 
 // swagger:route POST /v1/orders OrderReq CreateOrder
@@ -79,4 +80,25 @@ func (ctr *orders) GetOrders(c echo.Context) error {
 		"code":    200,
 		"data":    result,
 	})
+}
+
+// CancelOrder handles PUT requests and cancel an order
+func (ctr *orders) CancelOrder(c echo.Context) error {
+	conID := c.Param("con_id")
+	if conID == "" {
+		restErr := errors.NewBadRequestError("order_consignment_id is required")
+		return c.JSON(restErr.Status, restErr)
+	}
+
+	cancelErr := ctr.oSvc.CancelOrder(conID)
+	if cancelErr != nil {
+		return c.JSON(cancelErr.Status, cancelErr)
+	}
+
+	return c.JSON(http.StatusOK, map[string]interface{}{
+		"message": "Order Cancelled Successfully",
+		"type":    "success",
+		"code":    200,
+	})
+
 }

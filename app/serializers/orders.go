@@ -3,6 +3,7 @@ package serializers
 import (
 	v "github.com/go-ozzo/ozzo-validation/v4"
 	"next-oms/infra/errors"
+	"regexp"
 )
 
 type OrderReq struct {
@@ -50,15 +51,19 @@ func (o OrderReq) Validate() error {
 	)
 }
 
-// Custom phone number validation function
 func validatePhoneNumber(value interface{}) error {
+	// Type assertion to ensure the input is a string
 	phone, ok := value.(string)
 	if !ok {
-		return errors.NewError("invalid")
+		return errors.NewError("invalid input type, expected a string")
 	}
 
-	if len(phone) < 11 {
-		return errors.NewError("phone number must be at least 11 digits")
+	// Define the regex pattern for Bangladeshi phone numbers
+	phoneRegex := regexp.MustCompile(`^(01)[3-9]{1}[0-9]{8}$`)
+
+	// Validate the phone number format
+	if !phoneRegex.MatchString(phone) {
+		return errors.NewError("invalid phone number format")
 	}
 
 	return nil
