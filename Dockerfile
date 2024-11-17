@@ -36,8 +36,6 @@ COPY --from=builder /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/
 COPY --chown=nobody:nobody --from=builder /src/swagger.yaml swagger.yaml
 # Import the compiled executable from the first stage.
 COPY --from=builder /app /app
-# importing seeder files from the first stage
-COPY --from=builder /src/_fixture/seed/* /infra/seed/
 
 # Perform any further action as an unprivileged user.
 USER nobody:nobody

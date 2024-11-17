@@ -130,7 +130,7 @@ func setDefaultConfig() {
 	config.Jwt = &JwtConfig{
 		AccessTokenSecret:  "accesstokensecret",
 		RefreshTokenSecret: "refreshtokensecret",
-		AccessTokenExpiry:  30,
+		AccessTokenExpiry:  300,
 		RefreshTokenExpiry: 10080,
 		ContextKey:         "user",
 	}

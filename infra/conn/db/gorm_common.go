@@ -16,7 +16,7 @@ func TransactionComplete(tx interface{}) {
 	tx.(*gorm.DB).Commit()
 }
 
-func applyFilteringCondition(stmt *gorm.DB, tableName string, filters *serializers.ListFilters, forCount bool) *gorm.DB {
+func applyFilters(stmt *gorm.DB, tableName string, filters *serializers.ListFilters, forCount bool) *gorm.DB {
 	offset := (filters.Page - 1) * filters.Size
 	sort := filters.Sort
 

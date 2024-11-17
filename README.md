@@ -1,20 +1,25 @@
-# Next-OMS - the purpose of this service is to provide & store orders and authenticate and authorize a user
+# Next-OMS
+## Overview
+The Next-OMS service is designed to handle order management and facilitate user authentication and authorization.
 
-### Interactive API documentation (provided by Swagger UI, Redoc, Rapidoc)
-```
-- http://localhost:8080/docs/swagger
-- http://localhost:8080/docs/redoc
-- http://localhost:8080/docs/rapidoc
-```
+## Interactive API Documentation
+Explore the API interactively using one of the following tools:
 
-## Local
-```terminal
+- Swagger UI: http://localhost:8080/docs/swagger
+- Redoc: http://localhost:8080/docs/redoc
+- Rapidoc: http://localhost:8080/docs/rapidoc
+## How to Run the Service
+### Local Development
+1. Install dependencies:
+```bash
 go mod vendor
-
+```
+2. Start the service:
+```bash
 go run main.go serve
 ```
-
-## Docker
-```terminal
+### Docker Environment
+Start the service in a Docker container:
+```bash
 make dev
 ```

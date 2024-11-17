@@ -9,11 +9,11 @@
   },
   "db": {
     "mysql": {
-      "host": "nextOms_mysql",
-      "port": "3309",
+      "host": "db",
+      "port": "3306",
       "user": "root",
       "pass": "12345678",
-      "schema": "nextOms_db",
+      "schema": "next-oms_db",
       "maxIdleConn": 1,
       "maxOpenConn": 2,
       "maxConnLifetime": 30,
@@ -30,7 +30,7 @@
   "cache": {
     "redis": {
       "host": "redis_dev",
-      "port": "6390",
+      "port": "6379",
       "pass": "password123",
       "db": 0,
       "accessUuidPrefix": "access-uuid_",

@@ -1,6 +1,6 @@
 services:
   consul:
-    image: consul:latest
+    image: consul:1.15
     container_name: consul_dev
     restart: always
     ports:

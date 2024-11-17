@@ -18,13 +18,16 @@ func Init(g interface{}, lc logger.LogClient) {
 	// register all repos impl, services impl, controllers
 	sysRepo := repoImpl.NewSystemRepository(basectx, lc, dbc, cachec)
 	userRepo := repoImpl.NewUsersRepository(basectx, lc, dbc)
+	orderRepo := repoImpl.NewOrdersRepository(basectx, lc, dbc)
 
 	sysSvc := svcImpl.NewSystemService(sysRepo)
 	userSvc := svcImpl.NewUsersService(basectx, lc, userRepo)
 	tokenSvc := svcImpl.NewTokenService(basectx, lc, userRepo)
 	authSvc := svcImpl.NewAuthService(basectx, lc, userRepo, tokenSvc)
+	orderSvc := svcImpl.NewOrdersService(basectx, lc, orderRepo)
 
 	controllers.NewSystemController(g, lc, sysSvc)
 	controllers.NewAuthController(g, lc, authSvc, userSvc)
 	controllers.NewUsersController(g, lc, userSvc)
+	controllers.NewOrdersController(g, lc, orderSvc)
 }

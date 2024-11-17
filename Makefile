@@ -1,4 +1,4 @@
-PROJECT_NAME := Next-OMS
+PROJECT_NAME := next-oms
 PKG_LIST := $(shell go list ${PROJECT_NAME}/... | grep -v /vendor/)
 
 

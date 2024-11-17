@@ -7,7 +7,6 @@ import (
 )
 
 type IUsers interface {
-	CreateAdminUser(domain.User) (*domain.User, *errors.RestErr)
 	CreateUser(domain.User) (*domain.User, *errors.RestErr)
 	GetUserById(uid uint) (*domain.User, *errors.RestErr)
 	GetUserByEmail(useremail string) (*domain.User, error)

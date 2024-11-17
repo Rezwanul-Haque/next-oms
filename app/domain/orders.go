@@ -1,9 +1,16 @@
-package models
+package domain
 
-import "time"
+import (
+	"next-oms/app/serializers"
+	"next-oms/infra/errors"
+)
+
+type IOrders interface {
+	SaveOrder(order *Order) (*Order, *errors.RestErr)
+	GetOrders(filters *serializers.ListFilters) (Orders, *errors.RestErr)
+}
 
 type Order struct {
-	ID               uint    `gorm:"primarykey" json:"id"`
 	ConsignmentID    string  `json:"order_consignment_id"`
 	Description      string  `json:"order_description"`
 	MerchantOrderID  string  `json:"merchant_order_id"`
@@ -21,5 +28,6 @@ type Order struct {
 	Status           string  `json:"order_status"`
 	OrderType        string  `json:"order_type"`
 	ItemType         string  `json:"item_type"`
-	CreatedAt        time.Time
 }
+
+type Orders []*Order

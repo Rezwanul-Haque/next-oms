@@ -27,6 +27,7 @@ type ListFilters struct {
 
 	QueryString string   `json:"qs"`
 	Searches    []Search `json:"search"`
+	BasePath    string   `json:"-"`
 }
 
 type Search struct {
@@ -78,7 +79,11 @@ func (lf *ListFilters) GenerateFilters(query url.Values) {
 	lf.Searches = searches
 }
 
-func (lf *ListFilters) GeneratePagesPath(urlPath string) {
+func (lf *ListFilters) GeneratePagesPath() {
+	urlPath := lf.BasePath
+	if lf.BasePath == "" {
+		urlPath = "http://localhost:8080/api/v1"
+	}
 	// search query params
 	searchQueryParams := ""
 	totalPages := lf.TotalPages
@@ -87,28 +92,23 @@ func (lf *ListFilters) GeneratePagesPath(urlPath string) {
 	}
 
 	// set first & last page pagination response
-	lf.FirstPage = fmt.Sprintf("?size=%d&page=%d&sort=%s", lf.Size, 1, lf.Sort) + searchQueryParams
-	lf.LastPage = fmt.Sprintf("?size=%d&page=%d&sort=%s", lf.Size, totalPages, lf.Sort) + searchQueryParams
+	lf.FirstPage = fmt.Sprintf("%s?size=%d&page=%d&sort=%s", urlPath, lf.Size, 1, lf.Sort) + searchQueryParams
+	lf.LastPage = fmt.Sprintf("%s?size=%d&page=%d&sort=%s", urlPath, lf.Size, totalPages, lf.Sort) + searchQueryParams
 
 	if lf.Page > 1 {
 		// set previous page pagination response
-		lf.PreviousPage = fmt.Sprintf("?size=%d&page=%d&sort=%s", lf.Size, lf.Page-1, lf.Sort) + searchQueryParams
+		lf.PreviousPage = fmt.Sprintf("%s?size=%d&page=%d&sort=%s", urlPath, lf.Size, lf.Page-1, lf.Sort) + searchQueryParams
 	}
 
 	if lf.Page < totalPages {
 		// set next page pagination response
-		lf.NextPage = fmt.Sprintf("?size=%d&page=%d&sort=%s", lf.Size, lf.Page+1, lf.Sort) + searchQueryParams
+		lf.NextPage = fmt.Sprintf("%s?size=%d&page=%d&sort=%s", urlPath, lf.Size, lf.Page+1, lf.Sort) + searchQueryParams
 	}
 
 	if lf.Page > totalPages {
 		// reset previous page
 		lf.PreviousPage = ""
 	}
-
-	lf.FirstPage = fmt.Sprintf("%s/%s", urlPath, lf.FirstPage)
-	lf.LastPage = fmt.Sprintf("%s/%s", urlPath, lf.LastPage)
-	lf.NextPage = fmt.Sprintf("%s/%s", urlPath, lf.NextPage)
-	lf.PreviousPage = fmt.Sprintf("%s/%s", urlPath, lf.PreviousPage)
 }
 
 func (lf *ListFilters) CalculateTotalPageAndRows(totalRows int64) {
